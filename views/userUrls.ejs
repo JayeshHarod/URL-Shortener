@@ -1,0 +1,35 @@
+<!-- views/userUrls.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Shortened URLs</title>
+  <link rel="stylesheet" href="/css/userStyle.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Your Shortened URLs</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Original URL</th>
+          <th>Short URL</th>
+          <th>Shorten Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% urls.forEach(url => { %>
+          <tr>
+            <td><%= url.id %></td>
+            <td><%= url.original_url %></td>
+            <td><a href="<%= `http://localhost:3000/${url.short_url}` %>"><%= url.short_url %></a></td>
+            <td><%= url.shorten_count %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

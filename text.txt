@@ -1,0 +1,13 @@
+   <!--
+    <p>Shortened URL <a href="<%= shortUrl %>">
+        <%= shortUrl %>
+      </a></p>
+
+    Check if shortenCount exists 
+    <% if (typeof shortenCount !=='undefined' ) { %>
+      <p>This URL has been shortened <%= shortenCount %> times.</p>
+      <% } else { %>
+        <p>This URL has been shortened 1 time.</p>
+        <% } %>
+          <% } %>
+-->

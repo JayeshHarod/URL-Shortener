@@ -1,0 +1,42 @@
+// controllers/urlController.js
+const shortid = require('shortid');
+const Url = require('../models/urlModel');
+
+exports.shortenUrl = (req, res) => {
+  const { originalUrl } = req.body;
+
+  // Check if the original URL already exists
+  Url.findByOriginalUrl(originalUrl, (existingUrl) => {
+    if (existingUrl) {
+      // If it exists, increment the shorten count and return the short URL
+      Url.incrementShortenCount(existingUrl.id, () => {
+        res.render('index', { 
+          shortUrl: `http://${existingUrl.short_url}`, 
+          shortenCount: existingUrl.shorten_count + 1 
+        });
+      });
+    } else {
+      // If it doesn't exist, create a new short URL
+      const shortUrl = shortid.generate();
+      Url.create(originalUrl, shortUrl, (result) => {
+        res.render('index', { 
+          shortUrl: `http://${shortUrl}`, 
+          shortenCount: 1 
+        });
+      });
+    }
+  });
+};
+
+exports.redirectUrl = (req, res) => {
+  const { shortUrl } = req.params;
+
+  // Find the original URL using the short URL
+  Url.findByShortUrl(shortUrl, (urlData) => {
+    if (urlData) {
+      res.redirect(urlData.original_url);
+    } else {
+      res.status(404).send('URL not found');
+    }
+  });
+};
