@@ -10,9 +10,9 @@ const Url = {
     });
   },
 
-  findByOriginalUrl: (originalUrl, callback) => {
-    const query = 'SELECT * FROM urls WHERE original_url = ?';
-    db.query(query, [originalUrl], (err, result) => {
+  findByOriginalUrl: (originalUrl, userId, callback) => {
+    const query = 'SELECT * FROM urls WHERE original_url = ? and user_id = ?';
+    db.query(query, [originalUrl,userId], (err, result) => {
       if (err) throw err;
       callback(result[0]);
     });
@@ -35,13 +35,12 @@ const Url = {
   },
 
   findUrlsByUserId: (userId, callback) => {
-    const query = 'SELECT * FROM urls WHERE user_id = ?';
-    db.query(query, [userId], (err, results) => {
-      if (err) throw err;
-      callback(results);  // Return the results as an array of URL objects
-    });
-  },
-
+  const query = 'SELECT * FROM urls WHERE user_id = ?';
+  db.query(query, [userId], (err, results) => {
+    if (err) throw err;
+    callback(results);  // Return the results as an array of URL objects
+  });
+}
 };
 
 module.exports = Url;
